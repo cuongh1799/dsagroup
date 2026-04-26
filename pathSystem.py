@@ -60,7 +60,8 @@ class RoutingEngine:
                 if shouldAvoid or (neighbor not in unvisited):
                     continue
 
-                # Weight selection: Determine edge cost based on the chosen mode (shortest distance vs. fastest time)
+                # if mode is distance, choose distance data of edge
+                # if mode is time, choose timeList
                 weight = float(edge.distance) if mode == "DISTANCE" else float(edge.timeList[hour])
 
                 # Dijkstra's relaxation step: Calculate new distance to neighbor
