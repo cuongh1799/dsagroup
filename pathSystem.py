@@ -50,7 +50,10 @@ class RoutingEngine:
                 shouldAvoid = False
                 if avoidEdges:
                     for forbidden in avoidEdges:
-                        # Check left right if should avoid or not
+                        # We check both directions (source->dest and dest->source) because the graph is undirected (two-way roads).
+                        # We use a 'shouldAvoid' flag and 'break' instead of an immediate 'continue' here, 
+                        # because 'continue' would only skip to the next item in the inner 'avoidEdges' loop, 
+                        # rather than skipping the current edge in the outer loop.
                         if (forbidden[0] == edge.source and forbidden[1] == edge.destination) or \
                            (forbidden[1] == edge.source and forbidden[0] == edge.destination):
                             shouldAvoid = True
@@ -76,6 +79,7 @@ class RoutingEngine:
         temp = endNode
         if distances[endNode] == infinity: return None
 
+        # Walk back the nodes
         while temp is not None:
             path.insert(0, temp)
             temp = previousNodes[temp]
